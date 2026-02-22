@@ -2,6 +2,21 @@ document.getElementById("htmlCode").value="<div>\n\n</div>";
 document.getElementById("cssCode").value="<style>\n\n</style>";
 document.getElementById("jsCode").value="<script>\n\n</script>";
 
+// load saved code from local storage when the page is loaded or refreshed
+window.addEventListener('load',function(){
+    if(localStorage.getItem("htmlCode")){
+        document.getElementById("htmlCode").value= localStorage.getItem("htmlCode");
+    }
+    if(localStorage.getItem("cssCode")){
+        document.getElementById("cssCode").value = localStorage.getItem("cssCode");
+    }
+
+    if(localStorage.getItem("jsCode")){
+        document.getElementById("jsCode").value = localStorage.getItem("jsCode");
+    }
+
+    showPreview(); // display saved code automatically
+})
 function showPreview(){
     var htmlCode = document.getElementById("htmlCode").value;
     var cssCode = ""+document.getElementById("cssCode").value+"";
@@ -11,7 +26,20 @@ function showPreview(){
     frame.write(htmlCode+cssCode+jsCode);
     frame.close();
 }
+// ------------------------------------------------------------------------------
+// Save automatically when user types
+document.getElementById("htmlCode").addEventListener("input", function(){
+    localStorage.setItem("htmlCode", this.value);
+});
 
+document.getElementById("cssCode").addEventListener("input", function(){
+    localStorage.setItem("cssCode", this.value);
+});
+
+document.getElementById("jsCode").addEventListener("input", function(){
+    localStorage.setItem("jsCode", this.value);
+});
+// ------------------------------------------------------------------------------
 function show(x){
     document.getElementById("html").style.display="none";
     document.getElementById("css").style.display="none";
